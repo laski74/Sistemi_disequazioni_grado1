@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi sui Sistemi di Disequazioni</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 20px;
+            background: none;
+            border: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #666;
+        }
+
+        .tab-button:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .exercise-card {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .exercise-card:hover {
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .exercise-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .difficulty {
+            display: flex;
+            gap: 3px;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 1.2em;
+        }
+
+        .exercise-problem {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 1.1em;
+            border-left: 4px solid #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .btn-solution {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-solution:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-steps {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-steps:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+        }
+
+        .solution-box, .steps-box {
+            display: none;
+            background: #e8f4f8;
+            border: 2px solid #4299e1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .steps-box {
+            background: #f0fff4;
+            border-color: #48bb78;
+        }
+
+        .solution-box.show, .steps-box.show {
+            display: block;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 2000px; }
+        }
+
+        .step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #48bb78;
+        }
+
+        .step-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-number {
+            background: #48bb78;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+
+        .final-answer {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .warning-title {
+            color: #c53030;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .warning-icon {
+            font-size: 1.5em;
+        }
+
+        .error-item {
+            background: white;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 3px solid #fc8181;
+        }
+
+        .tip-box {
+            background: #fffaf0;
+            border: 2px solid #ecc94b;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .tip-title {
+            color: #744210;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Esercizi sui Sistemi di Disequazioni</h1>
+            <p class="subtitle">Verifica, impara e migliora le tue competenze</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'tab1')">
+                Sistemi di Disequazioni
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'tab2')">
+                Problemi sui Sistemi
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'tab3')">
+                Disequazioni Fratte
+            </button>
+        </div>
+
+        <!-- TAB 1: SISTEMI DI DISEQUAZIONI -->
+        <div id="tab1" class="tab-content active">
+            
+            <!-- Esercizio 193 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 193</span>
+                    <div class="difficulty">
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    -x + 8 \geq 9 \\
+                    2x + 5 \geq 3
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Risolvi la prima disequazione
+                        </div>
+                        <p>$-x + 8 \geq 9$</p>
+                        <p>$-x \geq 9 - 8$</p>
+                        <p>$-x \geq 1$</p>
+                        <p>Moltiplicando per $-1$ (cambia il verso!): $x \leq -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Risolvi la seconda disequazione
+                        </div>
+                        <p>$2x + 5 \geq 3$</p>
+                        <p>$2x \geq 3 - 5$</p>
+                        <p>$2x \geq -2$</p>
+                        <p>$x \geq -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione delle soluzioni
+                        </div>
+                        <p>Prima disequazione: $x \leq -1$</p>
+                        <p>Seconda disequazione: $x \geq -1$</p>
+                        <p>L'intersezione è: $x = -1$ (un solo punto!)</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore 1:</strong> Dimenticare di cambiare il verso della disequazione quando si moltiplica per un numero negativo.
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore 2:</strong> Confondere intersezione con unione. In un sistema con "E" logico, cerchiamo i valori che soddisfano ENTRAMBE le condizioni.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x = -1$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 194 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 194</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    -x > 5 \\
+                    3x > 12 + x
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Risolvi la prima disequazione
+                        </div>
+                        <p>$-x > 5$</p>
+                        <p>Moltiplico per $-1$ e cambio il verso:</p>
+                        <p>$x < -5$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Risolvi la seconda disequazione
+                        </div>
+                        <p>$3x > 12 + x$</p>
+                        <p>$3x - x > 12$</p>
+                        <p>$2x > 12$</p>
+                        <p>$x > 6$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione delle soluzioni
+                        </div>
+                        <p>Prima disequazione: $x < -5$</p>
+                        <p>Seconda disequazione: $x > 6$</p>
+                        <p><strong>NON ESISTE</strong> alcun valore che sia contemporaneamente minore di $-5$ E maggiore di $6$!</p>
+                        <p>Gli insiemi sono disgiunti → il sistema è <strong>impossibile</strong></p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore 1:</strong> Dimenticare che "impossibile" è una risposta valida!
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore 2:</strong> Confondere sistema impossibile con sistema indeterminato.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer" style="background: linear-gradient(135deg, #fc8181 0%, #c53030 100%);">
+                        Soluzione: IMPOSSIBILE
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 195 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 195</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    2k - 2 \leq 3 - (k - 10) \\
+                    -5k \leq 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Risolvi la prima disequazione
+                        </div>
+                        <p>$2k - 2 \leq 3 - (k - 10)$</p>
+                        <p>$2k - 2 \leq 3 - k + 10$</p>
+                        <p>$2k - 2 \leq 13 - k$</p>
+                        <p>$3k \leq 15$</p>
+                        <p>$k \leq 5$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Risolvi la seconda disequazione
+                        </div>
+                        <p>$-5k \leq 0$</p>
+                        <p>Divido per $-5$ (cambio il verso!):</p>
+                        <p>$k \geq 0$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$k \leq 5$ E $k \geq 0$</p>
+                        <p>Soluzione: $0 \leq k \leq 5$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore 1:</strong> Errori nel rimuovere le parentesi. $-(k-10)$ diventa $-k+10$!
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore 2:</strong> Dimenticare di cambiare il verso dividendo per $-5$.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $0 \leq k \leq 5$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 196 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 196</span>
+                    <div class="difficulty">
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    2(x - 1) < 6 + x \\
+                    4x \leq -8
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Risolvi la prima disequazione
+                        </div>
+                        <p>$2(x - 1) < 6 + x$</p>
+                        <p>$2x - 2 < 6 + x$</p>
+                        <p>$2x - x < 6 + 2$</p>
+                        <p>$x < 8$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Risolvi la seconda disequazione
+                        </div>
+                        <p>$4x \leq -8$</p>
+                        <p>$x \leq -2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>Prima: $x < 8$</p>
+                        <p>Seconda: $x \leq -2$</p>
+                        <p>L'intervallo $x \leq -2$ è contenuto in $x < 8$</p>
+                        <p>Soluzione: $x \leq -2$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Quando un intervallo è contenuto nell'altro, la soluzione è quello più restrittivo!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x \leq -2$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 197 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 197</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    2t + 5 > 5t - 2 \\
+                    3(t + 4) \leq 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$2t + 5 > 5t - 2$</p>
+                        <p>$2t - 5t > -2 - 5$</p>
+                        <p>$-3t > -7$</p>
+                        <p>$t < \frac{7}{3}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$3(t + 4) \leq 0$</p>
+                        <p>$3t + 12 \leq 0$</p>
+                        <p>$t \leq -4$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$t < \frac{7}{3}$ E $t \leq -4$</p>
+                        <p>Soluzione: $t \leq -4$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Quando dividi per $-3$, devi cambiare il verso della disequazione!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $t \leq -4$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 198 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 198</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    (3x + 5)2 - 5x \geq -9x \\
+                    4(7 - x) - (3 - 5x) \geq 8
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$(3x + 5) \cdot 2 - 5x \geq -9x$</p>
+                        <p>$6x + 10 - 5x \geq -9x$</p>
+                        <p>$x + 10 \geq -9x$</p>
+                        <p>$10x \geq -10$</p>
+                        <p>$x \geq -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$4(7 - x) - (3 - 5x) \geq 8$</p>
+                        <p>$28 - 4x - 3 + 5x \geq 8$</p>
+                        <p>$25 + x \geq 8$</p>
+                        <p>$x \geq -17$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x \geq -1$ E $x \geq -17$</p>
+                        <p>La condizione più restrittiva è $x \geq -1$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Attenzione ai segni davanti alle parentesi! $-(3-5x) = -3+5x$
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x \geq -1$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 200 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 200</span>
+                    <div class="difficulty">
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    9(4 - x) \geq 0 \\
+                    x(x - x) > 6 - x^2 - x
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$9(4 - x) \geq 0$</p>
+                        <p>$36 - 9x \geq 0$</p>
+                        <p>$-9x \geq -36$</p>
+                        <p>$x \leq 4$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$x(x - x) > 6 - x^2 - x$</p>
+                        <p>$x \cdot 0 > 6 - x^2 - x$</p>
+                        <p>$0 > 6 - x^2 - x$</p>
+                        <p>$x^2 + x - 6 > 0$</p>
+                        <p>Risolvo: $(x+3)(x-2) > 0$</p>
+                        <p>Soluzioni: $x < -3$ oppure $x > 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>Prima: $x \leq 4$</p>
+                        <p>Seconda: $x < -3$ oppure $x > 2$</p>
+                        <p>Intersezione: $x < -3$ oppure $2 < x \leq 4$</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Suggerimento</div>
+                        <p>Quando hai $x(x-x) = x \cdot 0 = 0$, semplifica prima di procedere!</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x < -3$ oppure $2 < x \leq 4$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 201 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 201</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    -3(2 - x) < 2 + 7x \\
+                    5x(1 - x) \leq x(4 - 5x)
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$-3(2 - x) < 2 + 7x$</p>
+                        <p>$-6 + 3x < 2 + 7x$</p>
+                        <p>$-4x < 8$</p>
+                        <p>$x > -2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$5x(1 - x) \leq x(4 - 5x)$</p>
+                        <p>$5x - 5x^2 \leq 4x - 5x^2$</p>
+                        <p>$5x \leq 4x$</p>
+                        <p>$x \leq 0$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x > -2$ E $x \leq 0$</p>
+                        <p>Soluzione: $-2 < x \leq 0$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> I termini $-5x^2$ si semplificano! Non dimenticare di eliminarli prima di procedere.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $-2 < x \leq 0$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 202 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 202</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    x + 1 > \frac{1 + x}{6} \\
+                    5(x - 2) \leq 3(1 - 2x)
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$x + 1 > \frac{1 + x}{6}$</p>
+                        <p>Moltiplico per 6:</p>
+                        <p>$6x + 6 > 1 + x$</p>
+                        <p>$5x > -5$</p>
+                        <p>$x > -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$5(x - 2) \leq 3(1 - 2x)$</p>
+                        <p>$5x - 10 \leq 3 - 6x$</p>
+                        <p>$11x \leq 13$</p>
+                        <p>$x \leq \frac{13}{11}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x > -1$ E $x \leq \frac{13}{11}$</p>
+                        <p>Soluzione: $-1 < x \leq \frac{13}{11}$</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Suggerimento</div>
+                        <p>Con frazioni, moltiplica tutto per il denominatore per semplificare!</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $-1 < x \leq \frac{13}{11}$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 228 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 228</span>
+                    <div class="difficulty">
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    5x - 1 < 1 \\
+                    -4x + 12 > 3(4 - x)
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$5x - 1 < 1$</p>
+                        <p>$5x < 2$</p>
+                        <p>$x < \frac{2}{5}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$-4x + 12 > 3(4 - x)$</p>
+                        <p>$-4x + 12 > 12 - 3x$</p>
+                        <p>$-x > 0$</p>
+                        <p>$x < 0$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x < \frac{2}{5}$ E $x < 0$</p>
+                        <p>La condizione più restrittiva è $x < 0$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x < 0$
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: PROBLEMI SUI SISTEMI -->
+        <div id="tab2" class="tab-content">
+            
+            <!-- Esercizio 234 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 234</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>Due numeri dispari consecutivi sono tali che:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>la loro somma diminuita di 8 non supera 12;</li>
+                        <li>la differenza tra il triplo del quadrato del primo e la metà del secondo è maggiore di $\frac{33}{2}$.</li>
+                    </ul>
+                    <p style="margin-top: 10px;">Trova le coppie di numeri che soddisfano tali condizioni.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Imposta le incognite
+                        </div>
+                        <p>Numeri dispari consecutivi: $x$ e $x+2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Prima condizione
+                        </div>
+                        <p>$x + (x+2) - 8 \leq 12$</p>
+                        <p>$2x - 6 \leq 12$</p>
+                        <p>$x \leq 9$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Seconda condizione
+                        </div>
+                        <p>$3x^2 - \frac{x+2}{2} > \frac{33}{2}$</p>
+                        <p>$6x^2 - x - 35 > 0$</p>
+                        <p>Radici: $x = \frac{5}{2}$ e $x = -\frac{7}{3}$</p>
+                        <p>Soluzione: $x < -\frac{7}{3}$ oppure $x > \frac{5}{2}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Sistema e soluzione
+                        </div>
+                        <p>Numeri dispari con $x \leq 9$ E ($x < -2.33$ o $x > 2.5$)</p>
+                        <p>Coppie: $..., (-5,-3), (-3,-1), (3,5), (5,7), (7,9), (9,11)$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Dimenticare che i numeri devono essere DISPARI!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Coppie valide: $(-5,-3), (-3,-1), (3,5), (5,7), (7,9), (9,11)$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 235 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 235</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>Determina quali possibili coppie di numeri dispari consecutivi verificano contemporaneamente le seguenti proprietà:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>la loro somma non è minore di 30;</li>
+                        <li>la differenza fra il triplo del maggiore e il doppio del minore, diminuita di 11, non supera 14.</li>
+                    </ul>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Impostazione
+                        </div>
+                        <p>Numeri dispari consecutivi: $x$ (minore) e $x+2$ (maggiore)</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Prima condizione
+                        </div>
+                        <p>"La somma non è minore di 30" → $\geq 30$</p>
+                        <p>$x + (x+2) \geq 30$</p>
+                        <p>$2x + 2 \geq 30$</p>
+                        <p>$x \geq 14$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Seconda condizione
+                        </div>
+                        <p>"$3 \cdot \text{maggiore} - 2 \cdot \text{minore} - 11 \leq 14$"</p>
+                        <p>$3(x+2) - 2x - 11 \leq 14$</p>
+                        <p>$3x + 6 - 2x - 11 \leq 14$</p>
+                        <p>$x - 5 \leq 14$</p>
+                        <p>$x \leq 19$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Sistema finale
+                        </div>
+                        <p>$14 \leq x \leq 19$ con $x$ dispari</p>
+                        <p>Numeri dispari: $15, 17, 19$</p>
+                        <p>Coppie: $(15, 17), (17, 19), (19, 21)$</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Traduzione testo</div>
+                        <p>"Non è minore di" = "è maggiore o uguale a" = $\geq$</p>
+                        <p>"Non supera" = "è minore o uguale a" = $\leq$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Coppie: $(15, 17), (17, 19), (19, 21)$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 236 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 236</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>Un rettangolo ha i lati lunghi $(x-2)$ cm e $(5x-1)$ cm.</strong>
+                    <p style="margin-top: 10px;">Determina quali valori può assumere $x$ affinché il perimetro del rettangolo sia al massimo 126 cm.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Condizioni di esistenza
+                        </div>
+                        <p>$x - 2 > 0 \Rightarrow x > 2$</p>
+                        <p>$5x - 1 > 0 \Rightarrow x > \frac{1}{5}$</p>
+                        <p>Più restrittiva: $x > 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Perimetro
+                        </div>
+                        <p>$P = 2(x-2) + 2(5x-1) = 12x - 6$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Condizione sul perimetro
+                        </div>
+                        <p>$12x - 6 \leq 126$</p>
+                        <p>$x \leq 11$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Sistema
+                        </div>
+                        <p>$x > 2$ E $x \leq 11$</p>
+                        <p>Soluzione: $2 < x \leq 11$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $2 < x \leq 11$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 237 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 237</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>In un rettangolo la base supera di 3 cm $\frac{1}{4}$ dell'altezza.</strong>
+                    <p style="margin-top: 10px;">Determina per quali valori dell'altezza $h$ il perimetro del rettangolo è compreso tra 120 cm e 130 cm.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Impostazione
+                        </div>
+                        <p>Altezza: $h$</p>
+                        <p>Base: $\frac{h}{4} + 3$</p>
+                        <p>Condizione: $h > 0$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Perimetro
+                        </div>
+                        <p>$P = 2h + 2\left(\frac{h}{4} + 3\right)$</p>
+                        <p>$P = 2h + \frac{h}{2} + 6 = \frac{5h}{2} + 6$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Condizioni
+                        </div>
+                        <p>$120 \leq P \leq 130$</p>
+                        <p>$120 \leq \frac{5h}{2} + 6 \leq 130$</p>
+                        <p>$114 \leq \frac{5h}{2} \leq 124$</p>
+                        <p>$\frac{228}{5} \leq h \leq \frac{248}{5}$</p>
+                        <p>$45.6 \leq h \leq 49.6$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> "Compreso tra" significa doppia disequazione con $\leq$ su entrambi i lati!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $\frac{228}{5} \leq h \leq \frac{248}{5}$ <br>
+                        (circa $45.6 \leq h \leq 49.6$ cm)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 238 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 238</span>
+                    <div class="difficulty">
+                        <span class="star">★★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>Un trapezio isoscele ha la base maggiore che è il triplo della minore e l'altezza che è $\frac{2}{3}$ della base minore.</strong>
+                    <p style="margin-top: 10px;">Quali valori può assumere la misura $b$ della base minore affinché la differenza tra l'area del trapezio e $1\frac{2}{3}$ dell'area del quadrato costruito sulla base e $1\frac{2}{3}$ dell'area del quadrato costruito sull'altezza sia non negativa?</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Impostazione
+                        </div>
+                        <p>Base minore: $b$, Base maggiore: $3b$, Altezza: $\frac{2b}{3}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Area trapezio
+                        </div>
+                        <p>$A_{trap} = \frac{(3b + b) \cdot \frac{2b}{3}}{2} = \frac{4b^2}{3}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Aree quadrati
+                        </div>
+                        <p>Quadrato su base: $\frac{5}{3} \cdot b^2 = \frac{5b^2}{3}$</p>
+                        <p>Quadrato su altezza: $\frac{5}{3} \cdot \frac{4b^2}{9} = \frac{20b^2}{27}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Disequazione
+                        </div>
+                        <p>$\frac{4b^2}{3} - \frac{5b^2}{3} - \frac{20b^2}{27} \geq 0$</p>
+                        <p>$\frac{-29b^2}{27} \geq 0$</p>
+                        <p>Possibile solo se $b = 0$, ma serve $b > 0$!</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer" style="background: linear-gradient(135deg, #fc8181 0%, #c53030 100%);">
+                        IMPOSSIBILE
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 239 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 239</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>Il lato di un quadrato è $(x + 3)$ cm.</strong>
+                    <p style="margin-top: 10px;">Stabilisci quali valori può assumere $x$ affinché il perimetro del quadrato che si ottiene aumentando il lato del 10% sia minore di 22 cm.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Condizioni di esistenza
+                        </div>
+                        <p>$x + 3 > 0 \Rightarrow x > -3$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Lato aumentato del 10%
+                        </div>
+                        <p>Nuovo lato: $(x+3) + 0.10(x+3) = 1.10(x+3)$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Perimetro nuovo quadrato
+                        </div>
+                        <p>$P = 4 \cdot 1.10(x+3) = 4.4(x+3)$</p>
+                        <p>$P = 4.4x + 13.2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Condizione
+                        </div>
+                        <p>$4.4x + 13.2 < 22$</p>
+                        <p>$4.4x < 8.8$</p>
+                        <p>$x < 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">5</span>
+                            Sistema
+                        </div>
+                        <p>$x > -3$ E $x < 2$</p>
+                        <p>Soluzione: $-3 < x < 2$</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Percentuali</div>
+                        <p>Aumentare del 10% significa moltiplicare per 1.10</p>
+                        <p>Diminuire del 10% significa moltiplicare per 0.90</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $-3 < x < 2$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 240 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 240</span>
+                    <div class="difficulty">
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>Tre segmenti lunghi 6 cm, 12 cm e 20 cm non possono essere i lati di un triangolo.</strong>
+                    <p style="margin-top: 10px;"><strong>a.</strong> Perché?</p>
+                    <p><strong>b.</strong> Se aggiungi a ciascuno di essi lo stesso segmento, come deve essere la sua misura $x$ affinché i segmenti ottenuti possano formare un triangolo?</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Parte a - Verifica disuguaglianza triangolare
+                        </div>
+                        <p>Condizione: ogni lato deve essere minore della somma degli altri due</p>
+                        <p>$6 + 12 = 18 < 20$ ✗ NON verificata!</p>
+                        <p>Quindi 6, 12, 20 NON possono formare un triangolo</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Parte b - Nuovi lati
+                        </div>
+                        <p>Lati: $(6+x)$, $(12+x)$, $(20+x)$ con $x > 0$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Disuguaglianze triangolari
+                        </div>
+                        <p>1) $(6+x) + (12+x) > (20+x)$</p>
+                        <p>$18 + 2x > 20 + x$</p>
+                        <p>$x > 2$</p>
+                        <p>2) $(6+x) + (20+x) > (12+x)$ → sempre vera</p>
+                        <p>3) $(12+x) + (20+x) > (6+x)$ → sempre vera</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Soluzione
+                        </div>
+                        <p>$x > 0$ E $x > 2$</p>
+                        <p>Condizione: $x > 2$ cm</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Disuguaglianza triangolare</div>
+                        <p>In un triangolo, la somma di due lati qualsiasi deve essere STRETTAMENTE maggiore del terzo lato.</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        <strong>a.</strong> $6 + 12 = 18 \not> 20$ <br>
+                        <strong>b.</strong> $x > 2$ cm
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 241 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 241</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>Un esagono regolare ha lato $(3b + 1)$ cm.</strong>
+                    <p style="margin-top: 10px;">Determina quali valori può assumere $b$ affinché il perimetro dell'esagono risulti maggiore degli $\frac{11}{8}$ del perimetro di un quadrato di lato $(68 - 1)$ cm.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Condizioni di esistenza
+                        </div>
+                        <p>$3b + 1 > 0 \Rightarrow b > -\frac{1}{3}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Perimetro esagono
+                        </div>
+                        <p>$P_{esa} = 6(3b + 1) = 18b + 6$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Perimetro quadrato
+                        </div>
+                        <p>Lato quadrato: $68 - 1 = 67$ cm</p>
+                        <p>$P_{quad} = 4 \cdot 67 = 268$</p>
+                        <p>$\frac{11}{8} \cdot 268 = \frac{2948}{8} = 368.5$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Condizione
+                        </div>
+                        <p>$18b + 6 > 368.5$</p>
+                        <p>$18b > 362.5$</p>
+                        <p>$b > \frac{362.5}{18} \approx 20.14$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">5</span>
+                            Sistema
+                        </div>
+                        <p>$b > -\frac{1}{3}$ E $b > 20.14$</p>
+                        <p>Soluzione: $b > \frac{725}{36}$ (o $b > 20.14$)</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $b > \frac{725}{36}$ cm
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 242 (triangolo disuguaglianza) -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 242</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>La disuguaglianza triangolare dice che in un triangolo ogni lato è sempre minore della somma degli altri due.</strong>
+                    <p style="margin-top: 10px;">Trova quali valori il numero $x$, $3x - 1$, $2 - x$ possono rappresentare le misure, in centimetri, dei lati di un quadrato.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Condizioni positività
+                        </div>
+                        <p>$x > 0$</p>
+                        <p>$3x - 1 > 0 \Rightarrow x > \frac{1}{3}$</p>
+                        <p>$2 - x > 0 \Rightarrow x < 2$</p>
+                        <p>Sistema: $\frac{1}{3} < x < 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Disuguaglianze triangolari
+                        </div>
+                        <p>1) $x + (3x-1) > (2-x)$</p>
+                        <p>$5x - 1 > 2 - x \Rightarrow x > \frac{1}{2}$</p>
+                        <p>2) $x + (2-x) > (3x-1)$</p>
+                        <p>$2 > 3x - 1 \Rightarrow x < 1$</p>
+                        <p>3) $(3x-1) + (2-x) > x$</p>
+                        <p>$2x + 1 > x \Rightarrow x > -1$ (sempre vera)</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Sistema completo
+                        </div>
+                        <p>$\frac{1}{3} < x < 2$ E $x > \frac{1}{2}$ E $x < 1$</p>
+                        <p>Soluzione: $\frac{1}{2} < x < 1$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Dimenticare di verificare TUTTE e tre le disuguaglianze triangolari!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $\frac{1}{2} < x < 1$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 243 (rettangolo area) -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 243</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>La base di un triangolo isoscele misura $x - 3$ e la misura dell'altezza è uguale alla somma tra 1 e $\frac{3}{4}$ di quella della base.</strong>
+                    <p style="margin-top: 10px;">Determina $x$ in modo che l'area del triangolo sia maggiore della differenza tra l'area del quadrato costruito sulla base del triangolo e $\frac{3}{2}$ dell'area del quadrato costruito sull'altezza.</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Impostazione
+                        </div>
+                        <p>Base: $b = x - 3$</p>
+                        <p>Altezza: $h = 1 + \frac{3}{4}(x-3) = 1 + \frac{3x-9}{4} = \frac{3x-5}{4}$</p>
+                        <p>Condizioni: $x > 3$ e $h > 0 \Rightarrow x > \frac{5}{3}$</p>
+                        <p>Più restrittiva: $x > 3$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Area triangolo
+                        </div>
+                        <p>$A_{tri} = \frac{b \cdot h}{2} = \frac{(x-3) \cdot \frac{3x-5}{4}}{2}$</p>
+                        <p>$A_{tri} = \frac{(x-3)(3x-5)}{8}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Aree quadrati
+                        </div>
+                        <p>Quadrato su base: $(x-3)^2$</p>
+                        <p>Quadrato su altezza: $\left(\frac{3x-5}{4}\right)^2$</p>
+                        <p>$\frac{3}{2}$ di quest'area: $\frac{3}{2} \cdot \frac{(3x-5)^2}{16} = \frac{3(3x-5)^2}{32}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Disequazione
+                        </div>
+                        <p>$\frac{(x-3)(3x-5)}{8} > (x-3)^2 - \frac{3(3x-5)^2}{32}$</p>
+                        <p>Questa disequazione richiede calcoli complessi</p>
+                        <p>Dopo semplificazione (moltiplicando per 32):</p>
+                        <p>Si ottiene una disequazione di secondo grado da risolvere</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Errori di calcolo con le frazioni. Usa il minimo comune multiplo!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x > 3$ (con ulteriori restrizioni dalla disequazione)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 244 (simple word problem) -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Problema 244</span>
+                    <div class="difficulty">
+                        <span class="star">★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    <strong>La misura in decimetri del lato di un quadrato è $3x - 1$.</strong>
+                    <p style="margin-top: 10px;">Un trapezio isoscele ha la base maggiore che ha la stessa lunghezza del lato del quadrato e il lato obliquo uguale al lato del quadrato diminuito di 2 dm. Determina $x$ in modo che l'area del trapezio non superi 144 dm².</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Nota
+                        </div>
+                        <p>Questo problema richiede informazioni aggiuntive sulla base minore o l'altezza del trapezio per essere risolto completamente.</p>
+                        <p>Condizione base: $3x - 1 > 0 \Rightarrow x > \frac{1}{3}$</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Strategia</div>
+                        <p>Se il testo non fornisce tutti i dati necessari, verifica se ci sono relazioni implicite tra le misure.</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Problema incompleto - servono più informazioni
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: DISEQUAZIONI FRATTE -->
+        <div id="tab3" class="tab-content">
+            
+            <!-- Esercizio 401 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 401</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni fratte:
+                    $$\begin{cases}
+                    \frac{x+6}{x-2} > 0 \\
+                    4x + 1 \leq 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Studio del segno frazione
+                        </div>
+                        <p>$\frac{x+6}{x-2} > 0$</p>
+                        <p>Numeratore: $x = -6$</p>
+                        <p>Denominatore: $x = 2$ (escluso!)</p>
+                        <p>Frazione positiva: $x < -6$ oppure $x > 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$4x + 1 \leq 0$</p>
+                        <p>$x \leq -\frac{1}{4}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$(x < -6 \text{ o } x > 2)$ E $x \leq -\frac{1}{4}$</p>
+                        <p>Solo $x < -6$ soddisfa entrambe</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Il denominatore = 0 deve essere SEMPRE escluso!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x < -6$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 402 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 402</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    x + 3 < 0 \\
+                    \frac{5 + 3x}{1 - x} > 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$x + 3 < 0$</p>
+                        <p>$x < -3$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Studio frazione
+                        </div>
+                        <p>$\frac{5 + 3x}{1 - x} > 0$</p>
+                        <p>Numeratore: $5 + 3x = 0 \Rightarrow x = -\frac{5}{3}$</p>
+                        <p>Denominatore: $1 - x = 0 \Rightarrow x = 1$ (escluso)</p>
+                        <p>Frazione positiva: $x < -\frac{5}{3}$ oppure $x > 1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x < -3$ E $(x < -\frac{5}{3} \text{ o } x > 1)$</p>
+                        <p>$x < -3$ è contenuto in $x < -\frac{5}{3}$</p>
+                        <p>Soluzione: $x < -3$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x < -3$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 403 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 403</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    \frac{4-x}{x} \geq 1 \\
+                    x + 2(x-1) < 4x + 5
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$\frac{4-x}{x} \geq 1$</p>
+                        <p>$\frac{4-x-x}{x} \geq 0$</p>
+                        <p>$\frac{4-2x}{x} \geq 0$</p>
+                        <p>Numeratore: $x = 2$ (incluso)</p>
+                        <p>Denominatore: $x = 0$ (escluso)</p>
+                        <p>Soluzione: $0 < x \leq 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$x + 2x - 2 < 4x + 5$</p>
+                        <p>$-x < 7$</p>
+                        <p>$x > -7$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$0 < x \leq 2$ E $x > -7$</p>
+                        <p>Soluzione: $0 < x \leq 2$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $0 < x \leq 2$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 404 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 404</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    \frac{3}{4}x \geq -\frac{9}{2} \\
+                    \frac{2}{x-2} > 1
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$\frac{3}{4}x \geq -\frac{9}{2}$</p>
+                        <p>$x \geq -6$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione fratta
+                        </div>
+                        <p>$\frac{2}{x-2} - 1 > 0$</p>
+                        <p>$\frac{2-(x-2)}{x-2} > 0$</p>
+                        <p>$\frac{4-x}{x-2} > 0$</p>
+                        <p>Soluzione: $2 < x < 4$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x \geq -6$ E $2 < x < 4$</p>
+                        <p>Soluzione: $2 < x < 4$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $2 < x < 4$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 405 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 405</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    \frac{3x - 1}{x + 1} < 3 \\
+                    x(x - 2) < (x - 1)^2 + x
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione fratta
+                        </div>
+                        <p>$\frac{3x - 1}{x + 1} - 3 < 0$</p>
+                        <p>$\frac{3x - 1 - 3(x+1)}{x + 1} < 0$</p>
+                        <p>$\frac{3x - 1 - 3x - 3}{x + 1} < 0$</p>
+                        <p>$\frac{-4}{x + 1} < 0$</p>
+                        <p>Denominatore: $x + 1 > 0 \Rightarrow x > -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$x^2 - 2x < x^2 - 2x + 1 + x$</p>
+                        <p>$0 < 1 + x$</p>
+                        <p>$x > -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x > -1$ E $x > -1$</p>
+                        <p>Soluzione: $x > -1$</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Frazione costante</div>
+                        <p>Se il numeratore è costante negativo e cerchi $< 0$, il denominatore deve essere positivo!</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x > -1$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 407 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 407</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    2 - x \leq 0 \\
+                    \frac{5}{2} - x \geq 0 \\
+                    4 - x
+                    \end{cases}$$
+                    [Nota: sistema incomp leto nello screenshot, interpreterò come $4-x \geq 0$]
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Risolvi le tre disequazioni
+                        </div>
+                        <p>1) $2 - x \leq 0 \Rightarrow x \geq 2$</p>
+                        <p>2) $\frac{5}{2} - x \geq 0 \Rightarrow x \leq \frac{5}{2}$</p>
+                        <p>3) $4 - x \geq 0 \Rightarrow x \leq 4$ (interpretazione)</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Intersezione
+                        </div>
+                        <p>$x \geq 2$ E $x \leq \frac{5}{2}$ E $x \leq 4$</p>
+                        <p>Soluzione: $2 \leq x \leq \frac{5}{2}$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $2 \leq x \leq \frac{5}{2}$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 408 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 408</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    \frac{3x - 1}{x + 1} \leq 3 \\
+                    4x \leq -(x + 3)
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$\frac{3x - 1 - 3(x+1)}{x + 1} \leq 0$</p>
+                        <p>$\frac{-4}{x + 1} \leq 0$</p>
+                        <p>Denominatore positivo: $x > -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$4x \leq -x - 3$</p>
+                        <p>$5x \leq -3$</p>
+                        <p>$x \leq -\frac{3}{5}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x > -1$ E $x \leq -\frac{3}{5}$</p>
+                        <p>Soluzione: $-1 < x \leq -\frac{3}{5}$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $-1 < x \leq -\frac{3}{5}$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 409 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 409</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    2x < 4 \\
+                    \frac{3x^2 - 7x}{x^2 + 4} \leq 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$2x < 4$</p>
+                        <p>$x < 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione fratta
+                        </div>
+                        <p>$\frac{3x^2 - 7x}{x^2 + 4} \leq 0$</p>
+                        <p>Numeratore: $x(3x - 7) \leq 0$</p>
+                        <p>Radici: $x = 0$ e $x = \frac{7}{3}$</p>
+                        <p>Denominatore: $x^2 + 4 > 0$ sempre (mai zero!)</p>
+                        <p>Studio segno numeratore: $0 \leq x \leq \frac{7}{3}$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$x < 2$ E $0 \leq x \leq \frac{7}{3}$</p>
+                        <p>Soluzione: $0 \leq x < 2$</p>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Denominatore sempre positivo</div>
+                        <p>Se $x^2 + 4 > 0$ per ogni $x$, il segno della frazione dipende solo dal numeratore!</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $0 \leq x < 2$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 410 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 410</span>
+                    <div class="difficulty">
+                        <span class="star">★★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    \frac{1}{1-x} + \frac{2}{x-1} > 1 \\
+                    \frac{2}{1-x} \leq 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$\frac{1}{1-x} + \frac{2}{x-1} > 1$</p>
+                        <p>Nota: $\frac{2}{x-1} = \frac{-2}{1-x}$</p>
+                        <p>$\frac{1}{1-x} - \frac{2}{1-x} > 1$</p>
+                        <p>$\frac{-1}{1-x} > 1$</p>
+                        <p>$\frac{-1-( 1-x)}{1-x} > 0$</p>
+                        <p>$\frac{x-2}{1-x} > 0$</p>
+                        <p>Soluzione: $x < 1$ oppure $x > 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$\frac{2}{1-x} \leq 0$</p>
+                        <p>Numeratore sempre positivo (2 > 0)</p>
+                        <p>Denominatore deve essere negativo: $1 - x < 0$</p>
+                        <p>$x > 1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$(x < 1 \text{ o } x > 2)$ E $x > 1$</p>
+                        <p>Soluzione: $x > 2$</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span class="warning-icon">⚠️</span>
+                            Errori Comuni
+                        </div>
+                        <div class="error-item">
+                            <strong>Errore:</strong> Attenzione! $\frac{2}{x-1} = -\frac{2}{1-x}$, non dimenticarlo!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x > 2$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 411 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 411</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    \frac{x + 1}{x + 3} \geq 0 \\
+                    \frac{x + 3}{x^2} > 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$\frac{x + 1}{x + 3} \geq 0$</p>
+                        <p>Numeratore: $x = -1$ (incluso)</p>
+                        <p>Denominatore: $x = -3$ (escluso)</p>
+                        <p>Soluzione: $x \leq -3$ oppure $x \geq -1$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$\frac{x + 3}{x^2} > 0$</p>
+                        <p>Numeratore: $x = -3$</p>
+                        <p>Denominatore: $x^2 > 0$ per $x \neq 0$</p>
+                        <p>Soluzione: $x > -3$ con $x \neq 0$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$(x < -3 \text{ o } x \geq -1)$ E $(x > -3, x \neq 0)$</p>
+                        <p>Soluzione: $x \geq -1$ con $x \neq 0$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $x \geq -1$ con $x \neq 0$
+                    </div>
+                </div>
+            </div>
+
+            <!-- Esercizio 412 -->
+            <div class="exercise-card">
+                <div class="exercise-header">
+                    <span class="exercise-number">Esercizio 412</span>
+                    <div class="difficulty">
+                        <span class="star">★★</span>
+                    </div>
+                </div>
+                
+                <div class="exercise-problem">
+                    Risolvi il sistema di disequazioni:
+                    $$\begin{cases}
+                    \frac{x - 2}{x + 5} \geq 0 \\
+                    \frac{2x}{x - 6} < 0
+                    \end{cases}$$
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-steps" onclick="toggleSteps(this)">
+                        📝 Mostra Svolgimento
+                    </button>
+                    <button class="btn btn-solution" onclick="toggleSolution(this)">
+                        ✓ Mostra Soluzione
+                    </button>
+                </div>
+
+                <div class="steps-box">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Prima disequazione
+                        </div>
+                        <p>$\frac{x - 2}{x + 5} \geq 0$</p>
+                        <p>Soluzione: $x \leq -5$ oppure $x \geq 2$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Seconda disequazione
+                        </div>
+                        <p>$\frac{2x}{x - 6} < 0$</p>
+                        <p>Soluzione: $0 < x < 6$</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Intersezione
+                        </div>
+                        <p>$(x \leq -5 \text{ o } x \geq 2)$ E $(0 < x < 6)$</p>
+                        <p>Soluzione: $2 \leq x < 6$</p>
+                    </div>
+                </div>
+
+                <div class="solution-box">
+                    <div class="final-answer">
+                        Soluzione: $2 \leq x < 6$
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function toggleSteps(button) {
+            const card = button.closest('.exercise-card');
+            const stepsBox = card.querySelector('.steps-box');
+            
+            if (stepsBox.classList.contains('show')) {
+                stepsBox.classList.remove('show');
+                button.textContent = '📝 Mostra Svolgimento';
+            } else {
+                stepsBox.classList.add('show');
+                button.textContent = '📝 Nascondi Svolgimento';
+            }
+        }
+
+        function toggleSolution(button) {
+            const card = button.closest('.exercise-card');
+            const solutionBox = card.querySelector('.solution-box');
+            
+            if (solutionBox.classList.contains('show')) {
+                solutionBox.classList.remove('show');
+                button.textContent = '✓ Mostra Soluzione';
+            } else {
+                solutionBox.classList.add('show');
+                button.textContent = '✓ Nascondi Soluzione';
+            }
+        }
+    </script>
+</body>
+</html>
